@@ -4,4 +4,4 @@
 
 ## Project Output
 
-[Click here to view my Food Delivery Website](https://kirthikakumar20.github.io/FSWD/Exp%202%20Food/index.html)
+[Click here to view my Food Delivery Website](https://kirthikakumar20.github.io/FSWD/Exp2%20%20Food/index.html)
