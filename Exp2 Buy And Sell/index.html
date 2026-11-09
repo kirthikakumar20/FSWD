@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UsedMart - Buy & Sell</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fff8fa;
+    color: #4b3439;
+}
+
+header {
+    background: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px #00000010;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #b85c7e;
+}
+
+nav a {
+    text-decoration: none;
+    color: #4b3439;
+    margin: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #d65d91;
+}
+
+.hero {
+    background: #f4e9e4;
+    margin: 20px;
+    padding: 70px 7%;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #593d35;
+}
+
+.hero p {
+    margin-bottom: 25px;
+}
+
+.search {
+    display: flex;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.search input {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px 0 0 6px;
+    outline: none;
+}
+
+.search button {
+    border-radius: 0 6px 6px 0;
+}
+
+button {
+    background: #b85c7e;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #91415f;
+}
+
+section {
+    padding: 35px 7%;
+}
+
+h2 {
+    text-align: center;
+    color: #b85c7e;
+    margin-bottom: 25px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filters select {
+    padding: 12px;
+    border: 1px solid #e2cbd3;
+    border-radius: 6px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px #00000012;
+    padding-bottom: 15px;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: #f4e9e4;
+}
+
+.card h3 {
+    margin: 12px;
+}
+
+.card p {
+    margin: 8px 12px;
+    font-size: 14px;
+}
+
+.price {
+    color: #b85c7e;
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+.card button {
+    margin: 5px;
+    padding: 10px 12px;
+}
+
+.form-box {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px #00000012;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #e2cbd3;
+    border-radius: 6px;
+}
+
+.form-box label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cart-item {
+    background: white;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px #00000010;
+}
+
+.total {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+#sell, #cart, #checkout, #confirmation,
+#details, #orders {
+    display: none;
+}
+
+.confirm-box {
+    background: white;
+    max-width: 500px;
+    margin: auto;
+    padding: 35px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 3px 12px #00000012;
+}
+
+.confirm-box h1 {
+    color: #b85c7e;
+    margin-bottom: 15px;
+}
+
+footer {
+    background: #593d35;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 35px;
+}
+
+@media(max-width: 600px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        text-align: center;
+        margin-top: 12px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">UsedMart ♡</div>
+
+    <nav>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('products')">Products</a>
+        <a onclick="showPage('sell')">Sell Product</a>
+        <a onclick="showPage('cart')">My Cart</a>
+        <a onclick="showPage('orders')">My Orders</a>
+    </nav>
+</header>
+
+<div id="home">
+    <div class="hero">
+        <h1>Buy & Sell Used Products Easily</h1>
+        <p>Find quality used products at affordable prices or sell your unused products easily.</p>
+
+        <div class="search">
+            <input id="homeSearch" placeholder="Search products..."
+                   oninput="searchProducts()">
+            <button onclick="showPage('products')">Search</button>
+        </div>
+
+        <button onclick="showPage('products')">Explore Products</button>
+    </div>
+</div>
+
+<section id="products">
+    <h2>Latest Products</h2>
+
+    <div class="filters">
+        <select id="categoryFilter" onchange="filterProducts()">
+            <option value="All">All Categories</option>
+            <option value="Books">Books</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <select id="priceFilter" onchange="filterProducts()">
+            <option value="All">All Prices</option>
+            <option value="1000">Below ₹1,000</option>
+            <option value="5000">Below ₹5,000</option>
+            <option value="10000">Below ₹10,000</option>
+        </select>
+    </div>
+
+    <div class="products" id="productList"></div>
+</section>
+
+<section id="sell">
+    <h2>Sell Your Product</h2>
+
+    <div class="form-box">
+        <form id="sellForm">
+            <label>Product Name</label>
+            <input id="sellName" placeholder="Enter product name" required>
+
+            <label>Product Image</label>
+            <input id="sellImage" type="file" accept="image/*">
+
+            <label>Category</label>
+            <select id="sellCategory" required>
+                <option value="">Select Category</option>
+                <option>Books</option>
+                <option>Furniture</option>
+                <option>Electronics</option>
+                <option>Clothing</option>
+                <option>Others</option>
+            </select>
+
+            <label>Price</label>
+            <input id="sellPrice" type="number" min="1"
+                   placeholder="Enter price" required>
+
+            <label>Condition</label>
+            <select id="sellCondition" required>
+                <option value="">Select Condition</option>
+                <option>Like New</option>
+                <option>Good</option>
+                <option>Used</option>
+            </select>
+
+            <label>Location</label>
+            <input id="sellLocation" placeholder="Enter location" required>
+
+            <label>Description</label>
+            <textarea id="sellDescription"
+                      placeholder="Product description"
+                      rows="3" required></textarea>
+
+            <label>Seller Name</label>
+            <input id="sellerName" placeholder="Enter your name" required>
+
+            <label>Phone Number</label>
+            <input id="sellerPhone" type="tel"
+                   placeholder="Enter phone number" required>
+
+            <button type="submit">Post Product</button>
+        </form>
+    </div>
+</section>
+
+<section id="details">
+    <h2>Product Details</h2>
+    <div class="form-box" id="detailsContent"></div>
+</section>
+
+<section id="cart">
+    <h2>My Cart</h2>
+    <div id="cartItems"></div>
+    <div class="total" id="cartTotal">Total: ₹0</div>
+    <button onclick="goCheckout()">Proceed to Checkout</button>
+</section>
+
+<section id="checkout">
+    <h2>Checkout</h2>
+
+    <div class="form-box">
+        <form id="checkoutForm">
+            <label>Full Name</label>
+            <input id="buyerName" required>
+
+            <label>Phone Number</label>
+            <input id="buyerPhone" type="tel"
+                   pattern="[0-9]{10}" required>
+
+            <label>Address</label>
+            <textarea id="buyerAddress" rows="3" required></textarea>
+
+            <label>City</label>
+            <input id="buyerCity" required>
+
+            <label>Pincode</label>
+            <input id="buyerPincode" pattern="[0-9]{6}" required>
+
+            <label>Payment Method</label>
+            <select id="paymentMethod">
+                <option>Cash on Delivery</option>
+                <option>UPI Payment</option>
+                <option>Credit / Debit Card</option>
+            </select>
+
+            <div class="total" id="checkoutTotal"></div>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</section>
+
+<section id="confirmation">
+    <div class="confirm-box">
+        <h1>✓</h1>
+        <h2>Order Confirmed!</h2>
+        <p>Your order has been placed successfully.</p>
+        <br>
+        <div id="orderInfo"></div>
+        <br>
+        <button onclick="continueShopping()">Continue Shopping</button>
+    </div>
+</section>
+
+<section id="orders">
+    <h2>My Orders</h2>
+    <div id="orderHistory"></div>
+</section>
+
+<footer>
+    <h3>UsedMart ♡</h3>
+    <p>Buy Smart. Sell Easy.</p>
+</footer>
+
+<script>
+let products = [
+    {
+        id: 1,
+        name: "Cristin Harmel",
+        price: 2000,
+        category: "Books",
+        condition: "Like New",
+        location: "Erode",
+        seller: "Dharshini M G",
+        phone: "7200261908",
+        description: "Good condition book.",
+        image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 2,
+        name: "Sofa",
+        price: 5000,
+        category: "Furniture",
+        condition: "Used",
+        location: "Karur",
+        seller: "Jayasi",
+        phone: "9876543210",
+        description: "Comfortable sofa in good condition.",
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 3,
+        name: "Headphones",
+        price: 800,
+        category: "Electronics",
+        condition: "Good",
+        location: "Erode",
+        seller: "Arun",
+        phone: "9876543211",
+        description: "Working headphones.",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        id: 4,
+        name: "Study Table",
+        price: 1500,
+        category: "Furniture",
+        condition: "Good",
+        location: "Salem",
+        seller: "Ravi",
+        phone: "9876543212",
+        description: "Used study table.",
+        image: "https://images.unsplash.com/photo- desk"
+    }
+];
+
+let cart = [];
+let orders = [];
+
+function showPage(page) {
+    const pages = [
+        "home", "products", "sell", "details",
+        "cart", "checkout", "confirmation", "orders"
+    ];
+
+    pages.forEach(id => {
+        document.getElementById(id).style.display = "none";
+    });
+
+    if (page === "home") {
+        document.getElementById("home").style.display = "block";
+        document.getElementById("products").style.display = "block";
+    } else {
+        document.getElementById(page).style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
+}
+
+function displayProducts(list = products) {
+    const productList = document.getElementById("productList");
+    productList.innerHTML = "";
+
+    if (list.length === 0) {
+        productList.innerHTML = "<p>No products found.</p>";
+        return;
+    }
+
+    list.forEach(product => {
+        productList.innerHTML += `
+            <div class="card">
+                <img src="${product.image}"
+                     onerror="this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80'">
+
+                <h3>${product.name}</h3>
+                <p class="price">₹${product.price}</p>
+                <p>${product.condition}</p>
+                <p>📍 ${product.location}</p>
+                <p>Seller: ${product.seller}</p>
+
+                <button onclick="viewDetails(${product.id})">
+                    View Details
+                </button>
+
+                <button onclick="addToCart(${product.id})">
+                    Add to Cart
+                </button>
+            </div>
+        `;
+    });
+}
+
+function searchProducts() {
+    const text = document.getElementById("homeSearch").value.toLowerCase();
+
+    const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(text)
+    );
+
+    displayProducts(filtered);
+}
+
+function filterProducts() {
+    const category = document.getElementById("categoryFilter").value;
+    const price = document.getElementById("priceFilter").value;
+
+    let filtered = products;
+
+    if (category !== "All") {
+        filtered = filtered.filter(p => p.category === category);
+    }
+
+    if (price !== "All") {
+        filtered = filtered.filter(p => p.price <= Number(price));
+    }
+
+    displayProducts(filtered);
+}
+
+function viewDetails(id) {
+    const product = products.find(p => p.id === id);
+
+    document.getElementById("detailsContent").innerHTML = `
+        <img src="${product.image}"
+             style="width:100%;height:280px;object-fit:cover;border-radius:10px">
+
+        <h3>${product.name}</h3>
+        <p><b>Price:</b> ₹${product.price}</p>
+        <p><b>Condition:</b> ${product.condition}</p>
+        <p><b>Location:</b> ${product.location}</p>
+        <p><b>Description:</b> ${product.description}</p>
+        <p><b>Seller:</b> ${product.seller}</p>
+        <p><b>Phone:</b> ${product.phone}</p>
+
+        <br>
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
+        <button onclick="showPage('products')">Back</button>
+    `;
+
+    showPage("details");
+}
+
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const existing = cart.find(p => p.id === id);
+
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({...product, quantity: 1});
+    }
+
+    updateCart();
+    alert("Product added to cart!");
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+}
+
+function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    cartItems.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    }
+
+    cart.forEach(item => {
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    <b>${item.name}</b><br>
+                    Price: ₹${item.price}<br>
+                    Quantity: ${item.quantity}<br>
+                    Total: ₹${item.price * item.quantity}
+                </div>
+
+                <button onclick="removeFromCart(${item.id})">
+                    Remove
+                </button>
+            </div>
+        `;
+    });
+
+    document.getElementById("cartTotal").innerText =
+        "Total: ₹" + getTotal();
+}
+
+function getTotal() {
+    return cart.reduce((sum, item) =>
+        sum + item.price * item.quantity, 0
+    );
+}
+
+function goCheckout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    document.getElementById("checkoutTotal").innerText =
+        "Order Total: ₹" + getTotal();
+
+    showPage("checkout");
+}
+
+document.getElementById("sellForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const file = document.getElementById("sellImage").files[0];
+
+    const newProduct = {
+        id: Date.now(),
+        name: document.getElementById("sellName").value,
+        price: Number(document.getElementById("sellPrice").value),
+        category: document.getElementById("sellCategory").value,
+        condition: document.getElementById("sellCondition").value,
+        location: document.getElementById("sellLocation").value,
+        description: document.getElementById("sellDescription").value,
+        seller: document.getElementById("sellerName").value,
+        phone: document.getElementById("sellerPhone").value,
+        image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80"
+    };
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function() {
+            newProduct.image = reader.result;
+            products.unshift(newProduct);
+            displayProducts();
+            document.getElementById("sellForm").reset();
+            alert("Product posted successfully!");
+            showPage("products");
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        products.unshift(newProduct);
+        displayProducts();
+        document.getElementById("sellForm").reset();
+        alert("Product posted successfully!");
+        showPage("products");
+    }
+});
+
+document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const orderId = "UM" + Math.floor(100000 + Math.random() * 900000);
+
+    const order = {
+        id: orderId,
+        total: getTotal(),
+        payment: document.getElementById("paymentMethod").value
+    };
+
+    orders.unshift(order);
+
+    document.getElementById("orderInfo").innerHTML = `
+        <p><b>Order ID:</b> ${order.id}</p>
+        <p><b>Total:</b> ₹${order.total}</p>
+        <p><b>Payment:</b> ${order.payment}</p>
+        <p><b>Status:</b> Order Confirmed</p>
+    `;
+
+    cart = [];
+    updateCart();
+    displayOrders();
+
+    document.getElementById("checkoutForm").reset();
+    showPage("confirmation");
+});
+
+function displayOrders() {
+    const history = document.getElementById("orderHistory");
+    history.innerHTML = "";
+
+    if (orders.length === 0) {
+        history.innerHTML = "<p>No orders yet.</p>";
+        return;
+    }
+
+    orders.forEach(order => {
+        history.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    <b>Order ID:</b> ${order.id}<br>
+                    <b>Total:</b> ₹${order.total}<br>
+                    <b>Payment:</b> ${order.payment}<br>
+                    <b>Status:</b> Confirmed
+                </div>
+            </div>
+        `;
+    });
+}
+
+function continueShopping() {
+    showPage("products");
+}
+
+displayProducts();
+updateCart();
+displayOrders();
+showPage("home");
+</script>
+
+</body>
+</html>
