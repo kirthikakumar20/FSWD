@@ -7,22 +7,12 @@ Full Stack Web Development Lab
 
 # FSWD - Full Stack Web Development
 
-## My Experiments
-
-### Experiment 1
-- [Portfolio](Exp1%20Portfolio/)
-- [Mini Twitter](Exp%201%20Twitter/)
-
-### Experiment 2
-- [Food Delivery Website](Exp2%20Food/)
-- [Buy and Sell Website](Exp2%20Buy%20And%20Sell/)
-
-# FSWD - Full Stack Web Development
-
 ## Experiment 1
-- [Portfolio](Exp1%20Portfolio/index.html)
-- [Mini Twitter](Exp%201%20Twitter/index.html)
+[View Portfolio](https://kirthikakumar20.github.io/FSWD/Exp1%20Portfolio/index.html)
+
+[View Mini Twitter](https://kirthikakumar20.github.io/FSWD/Exp%201%20Twitter/index.html)
 
 ## Experiment 2
-- [Food Delivery Website](Exp2%20Food/index.html)
-- [Buy and Sell Website](Exp2%20Buy%20And%20Sell/index.html)
+[View Food Delivery](https://kirthikakumar20.github.io/FSWD/Exp2%20Food/index.html)
+
+[View Buy and Sell](https://kirthikakumar20.github.io/FSWD/Exp2%20Buy%20And%20Sell/index.html)
