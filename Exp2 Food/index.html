@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodVerse - Food Delivery</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f3fff4;
+    color: #263528;
+}
+
+header {
+    background: #218838;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+}
+
+.hero {
+    background: #e1f5e5;
+    padding: 50px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.hero-text {
+    max-width: 450px;
+}
+
+.hero h1 {
+    color: #218838;
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.hero img {
+    width: 380px;
+    max-width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+button {
+    background: #218838;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #176b2b;
+}
+
+section {
+    padding: 35px 7%;
+}
+
+h2 {
+    text-align: center;
+    color: #218838;
+    margin-bottom: 25px;
+}
+
+.search {
+    display: block;
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    padding: 13px;
+    border: 1px solid #b8dfbd;
+    border-radius: 25px;
+    outline: none;
+}
+
+.food-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.food-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 18px;
+    box-shadow: 0 4px 12px #00000015;
+}
+
+.food-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.food-card h3 {
+    margin: 15px 0 8px;
+}
+
+.food-card p {
+    color: #218838;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.cart-item {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cart-item button {
+    padding: 7px 12px;
+}
+
+.total {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.checkout-box {
+    background: white;
+    max-width: 600px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px #00000015;
+}
+
+.checkout-box input,
+.checkout-box textarea,
+.checkout-box select {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border: 1px solid #c8e6cc;
+    border-radius: 8px;
+}
+
+.checkout-box label {
+    display: block;
+    margin: 12px 0;
+}
+
+#checkout,
+#payment,
+#success {
+    display: none;
+}
+
+.success {
+    background: white;
+    text-align: center;
+    padding: 35px;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 15px;
+}
+
+.success h2 {
+    margin: 15px 0;
+}
+
+footer {
+    background: #218838;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+@media(max-width: 600px) {
+    header {
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 0 7px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero img {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">FoodVerse 🍃</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#cart">Cart</a>
+        <a href="#about">About</a>
+    </nav>
+</header>
+
+<div class="hero" id="home">
+    <div class="hero-text">
+        <h1>Fresh Food Delivered To Your Door</h1>
+        <p>Order delicious food anytime from your favourite restaurant. Fresh, tasty and delivered fast!</p>
+        <button onclick="goToMenu()">Order Now</button>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
+         alt="Pizza">
+</div>
+
+<section id="menu">
+    <h2>🍽️ Our Delicious Menu</h2>
+
+    <input class="search"
+           id="search"
+           placeholder="Search food..."
+           oninput="searchFood()">
+
+    <div class="food-list" id="foodList"></div>
+</section>
+
+<section id="cart">
+    <h2>🛒 Your Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="total" id="cartTotal">Total: ₹0</div>
+
+    <button onclick="goToCheckout()">Proceed to Checkout</button>
+</section>
+
+<section id="checkout">
+    <h2>🏡 Checkout</h2>
+
+    <div class="checkout-box">
+        <h3>Enter Your Delivery Details</h3>
+
+        <input id="customerName" placeholder="Your Name">
+        <input id="phone" type="tel" placeholder="Phone Number">
+        <textarea id="address" placeholder="Delivery Address" rows="3"></textarea>
+
+        <label>Delivery Option</label>
+
+        <select id="delivery">
+            <option value="0">Standard Delivery - Free</option>
+            <option value="50">Express Delivery - ₹50</option>
+        </select>
+
+        <button onclick="goToPayment()">Continue to Payment</button>
+    </div>
+</section>
+
+<section id="payment">
+    <h2>💳 Payment</h2>
+
+    <div class="checkout-box">
+        <h3>Select Payment Method</h3>
+
+        <label>
+            <input type="radio" name="pay" value="UPI Payment" checked>
+            UPI Payment
+        </label>
+
+        <label>
+            <input type="radio" name="pay" value="Credit / Debit Card">
+            Credit / Debit Card
+        </label>
+
+        <label>
+            <input type="radio" name="pay" value="Cash On Delivery">
+            Cash On Delivery
+        </label>
+
+        <input id="cardNumber" placeholder="Card Number">
+        <input id="expiry" placeholder="Expiry Date">
+        <input id="cvv" placeholder="CVV">
+
+        <div class="total" id="paymentTotal"></div>
+
+        <button onclick="placeOrder()">Place Order</button>
+    </div>
+</section>
+
+<section id="success">
+    <div class="success">
+        <h1>✅</h1>
+        <h2>Order Placed Successfully!</h2>
+        <p>Thank you for ordering with FoodVerse 💚</p>
+
+        <br>
+
+        <div id="orderDetails"></div>
+
+        <br>
+
+        <button onclick="backHome()">Back To Home</button>
+    </div>
+</section>
+
+<section id="about">
+    <h2>About FoodVerse</h2>
+
+    <p style="text-align:center;line-height:1.8">
+        FoodVerse is a food delivery platform designed to bring delicious meals
+        from restaurants directly to your doorstep. We provide fast delivery,
+        fresh food and a simple ordering experience.
+    </p>
+</section>
+
+<footer>
+    <h3>FoodVerse 🍃</h3>
+    <p>Fresh Food Delivered Fast</p>
+</footer>
+
+<script>
+const foods = [
+    {
+        name: "Chicken Burger",
+        price: 199,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        name: "Chicken Biryani",
+        price: 249,
+        image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        name: "Pizza",
+        price: 299,
+        image: "https://images.unsplash.com/photo-157 pizza"
+    },
+    {
+        name: "French Fries",
+        price: 99,
+        image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        name: "Pasta",
+        price: 179,
+        image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        name: "Chocolate Cake",
+        price: 149,
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
+    }
+];
+
+let cart = [];
+
+function displayFoods(items = foods) {
+    const foodList = document.getElementById("foodList");
+    foodList.innerHTML = "";
+
+    items.forEach(food => {
+        foodList.innerHTML += `
+            <div class="food-card">
+                <img src="${food.image}"
+                     onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'"
+                     alt="${food.name}">
+
+                <h3>${food.name}</h3>
+                <p>₹${food.price}</p>
+
+                <button onclick="addToCart('${food.name}')">
+                    Add To Cart
+                </button>
+            </div>
+        `;
+    });
+}
+
+function goToMenu() {
+    document.getElementById("menu").scrollIntoView();
+}
+
+function searchFood() {
+    const text = document.getElementById("search").value.toLowerCase();
+
+    const filtered = foods.filter(food =>
+        food.name.toLowerCase().includes(text)
+    );
+
+    displayFoods(filtered);
+}
+
+function addToCart(name) {
+    const food = foods.find(item => item.name === name);
+    const existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({...food, quantity: 1});
+    }
+
+    updateCart();
+}
+
+function removeFromCart(name) {
+    cart = cart.filter(item => item.name !== name);
+    updateCart();
+}
+
+function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    cartItems.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    }
+
+    cart.forEach(item => {
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <span>${item.name} × ${item.quantity}</span>
+                <span>₹${item.price * item.quantity}</span>
+                <button onclick="removeFromCart('${item.name}')">
+                    Remove
+                </button>
+            </div>
+        `;
+    });
+
+    document.getElementById("cartTotal").innerText =
+        "Total: ₹" + getTotal();
+}
+
+function getTotal() {
+    return cart.reduce((sum, item) =>
+        sum + item.price * item.quantity, 0
+    );
+}
+
+function goToCheckout() {
+    if (cart.length === 0) {
+        alert("Please add food to your cart first!");
+        return;
+    }
+
+    document.getElementById("checkout").style.display = "block";
+    document.getElementById("checkout").scrollIntoView();
+}
+
+function goToPayment() {
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if (!name || !phone || !address) {
+        alert("Please fill in all delivery details.");
+        return;
+    }
+
+    document.getElementById("payment").style.display = "block";
+
+    const deliveryCharge =
+        Number(document.getElementById("delivery").value);
+
+    document.getElementById("paymentTotal").innerText =
+        "Total: ₹" + (getTotal() + deliveryCharge);
+
+    document.getElementById("payment").scrollIntoView();
+}
+
+function placeOrder() {
+    const name = document.getElementById("customerName").value;
+    const deliveryCharge =
+        Number(document.getElementById("delivery").value);
+
+    const paymentMethod =
+        document.querySelector('input[name="pay"]:checked').value;
+
+    const finalTotal = getTotal() + deliveryCharge;
+    const orderId = "FV" + Math.floor(10000 + Math.random() * 90000);
+
+    if (paymentMethod === "Credit / Debit Card") {
+        const card = document.getElementById("cardNumber").value.trim();
+        const expiry = document.getElementById("expiry").value.trim();
+        const cvv = document.getElementById("cvv").value.trim();
+
+        if (!card || !expiry || !cvv) {
+            alert("Please enter your card details.");
+            return;
+        }
+    }
+
+    document.getElementById("success").style.display = "block";
+
+    document.getElementById("orderDetails").innerHTML = `
+        <p><b>Customer:</b> ${name}</p>
+        <p><b>Order ID:</b> ${orderId}</p>
+        <p><b>Total:</b> ₹${finalTotal}</p>
+        <p><b>Payment:</b> ${paymentMethod}</p>
+        <p><b>Delivery Time:</b> 30–40 Minutes</p>
+        <p><b>Status:</b> Preparing Food 🍲</p>
+    `;
+
+    document.getElementById("success").scrollIntoView();
+
+    cart = [];
+    updateCart();
+}
+
+function backHome() {
+    document.getElementById("checkout").style.display = "none";
+    document.getElementById("payment").style.display = "none";
+    document.getElementById("success").style.display = "none";
+
+    document.getElementById("home").scrollIntoView();
+}
+
+displayFoods();
+updateCart();
+</script>
+
+</body>
+</html>

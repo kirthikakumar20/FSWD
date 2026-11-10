@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kirthika K | Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f8f5f0;
+            color: #3e3026;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: #fffaf4;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px #00000008;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #795438;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #5d4938;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #b17b4d;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 90px 10%;
+            min-height: 85vh;
+            gap: 40px;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .small {
+            color: #a47750;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin: 15px 0;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: #9b704b;
+        }
+
+        .hero h2 {
+            font-size: 23px;
+            color: #80654e;
+            font-weight: 500;
+        }
+
+        .hero p {
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #77685b;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #795438;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4e3524;
+            transform: translateY(-3px);
+        }
+
+        .hero img {
+            width: 280px;
+            height: 340px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 20px;
+            border: 8px solid white;
+            box-shadow: 0 15px 35px #5d49381c;
+        }
+
+        section {
+            padding: 70px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: #795438;
+        }
+
+        .section-title p {
+            color: #968575;
+            margin-top: 8px;
+        }
+
+        .about {
+            background: #eee5d9;
+        }
+
+        .about-content {
+            max-width: 850px;
+            margin: auto;
+            text-align: center;
+            line-height: 1.9;
+            color: #685747;
+        }
+
+        .skills {
+            background: #fffaf4;
+        }
+
+        .skill-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .skill {
+            background: #f0e5d8;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: #795438;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .skill:hover {
+            background: #795438;
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: #fffaf4;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #eadccf;
+            transition: 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 25px #79543818;
+        }
+
+        .project-card i {
+            font-size: 30px;
+            color: #a47750;
+            margin-bottom: 15px;
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            color: #795438;
+        }
+
+        .project-card p {
+            color: #78695b;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eee5d9;
+            color: #795438;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+
+        .education {
+            background: #eee5d9;
+        }
+
+        .edu-card {
+            max-width: 700px;
+            margin: auto;
+            background: #fffaf4;
+            padding: 30px;
+            border-left: 5px solid #795438;
+            border-radius: 8px;
+        }
+
+        .edu-card h3 {
+            color: #795438;
+            margin-bottom: 10px;
+        }
+
+        .edu-card p {
+            line-height: 1.8;
+            color: #78695b;
+        }
+
+        .contact {
+            text-align: center;
+            background: #fffaf4;
+        }
+
+        .contact p {
+            color: #78695b;
+            margin: 15px 0;
+        }
+
+        .socials {
+            margin-top: 25px;
+        }
+
+        .socials a {
+            display: inline-block;
+            margin: 10px;
+            font-size: 25px;
+            color: #795438;
+            transition: 0.3s;
+        }
+
+        .socials a:hover {
+            color: #b17b4d;
+            transform: translateY(-4px);
+        }
+
+        footer {
+            background: #4e3524;
+            color: #f8f5f0;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+                font-size: 12px;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 60px 7%;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero img {
+                width: 220px;
+                height: 270px;
+            }
+
+            section {
+                padding: 55px 7%;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav>
+        <div class="logo">Kirthika K.</div>
+
+        <div>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Home -->
+
+    <div class="hero" id="home">
+
+        <div class="hero-text">
+
+            <p class="small">WELCOME TO MY PORTFOLIO</p>
+
+            <h1>Hi, I'm <span>Kirthika K</span></h1>
+
+            <h2>Data Analyst | IT Student</h2>
+
+            <p>
+                I am a passionate Information Technology student
+                interested in Data Analytics, Business Intelligence,
+                and Artificial Intelligence. I enjoy transforming
+                data into meaningful insights and building
+                practical technology solutions.
+            </p>
+
+            <a href="#projects" class="btn">
+                Explore My Projects
+            </a>
+
+        </div>
+
+        <!-- My Profile Image -->
+
+        <img
+            src="WhatsApp%20Image%202026-11-05%20at%203.44.29%20PM.jpeg"
+            alt="Kirthika K Profile Photo"
+        >
+
+    </div>
+
+    <!-- About Me -->
+
+    <section class="about" id="about">
+
+        <div class="section-title">
+            <h2>About Me</h2>
+            <p>Get to know me</p>
+        </div>
+
+        <div class="about-content">
+
+            <p>
+                I am Kirthika K, a third-year Information Technology
+                student at Velalar College of Engineering and Technology.
+                I am interested in Data Analytics, Data Science,
+                and Business Intelligence.
+            </p>
+
+            <br>
+
+            <p>
+                I have experience working with Power BI, SQL,
+                Python, and C Programming through academic projects
+                and learning activities. My goal is to become
+                a skilled Data Analyst and create meaningful
+                insights through data-driven problem solving.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Skills -->
+
+    <section class="skills" id="skills">
+
+        <div class="section-title">
+            <h2>My Skills</h2>
+            <p>Technologies and tools I work with</p>
+        </div>
+
+        <div class="skill-box">
+
+            <div class="skill">C Programming</div>
+            <div class="skill">Python</div>
+            <div class="skill">SQL</div>
+            <div class="skill">Power BI</div>
+            <div class="skill">Data Analytics</div>
+            <div class="skill">Data Science</div>
+            <div class="skill">Generative AI</div>
+            <div class="skill">Agentic AI</div>
+            <div class="skill">Excel</div>
+            <div class="skill">Data Visualization</div>
+
+        </div>
+
+    </section>
+
+    <!-- Projects -->
+
+    <section id="projects">
+
+        <div class="section-title">
+            <h2>My Projects</h2>
+            <p>Some of my academic and practical work</p>
+        </div>
+
+        <div class="project-grid">
+
+            <div class="project-card">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                <h3>Sales Dashboard</h3>
+
+                <p>
+                    Developed an interactive Power BI dashboard
+                    to analyze sales data, compare performance,
+                    and visualize important business insights.
+                </p>
+
+                <span class="tag">Power BI</span>
+                <span class="tag">Data Visualization</span>
+
+            </div>
+
+            <div class="project-card">
+
+                <i class="fa-solid fa-database"></i>
+
+                <h3>SQL Database Project</h3>
+
+                <p>
+                    Created a database project using SQL to
+                    organize data, retrieve information,
+                    and perform data analysis using queries.
+                </p>
+
+                <span class="tag">SQL</span>
+                <span class="tag">Database</span>
+
+            </div>
+
+            <div class="project-card">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <h3>Data Analytics Project</h3>
+
+                <p>
+                    Worked on a data analytics project to
+                    explore datasets, identify patterns,
+                    and understand meaningful insights
+                    from data.
+                </p>
+
+                <span class="tag">Data Analytics</span>
+                <span class="tag">Python</span>
+
+            </div>
+
+            <div class="project-card">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <h3>AI Chatbot Project</h3>
+
+                <p>
+                    Designed an AI chatbot project to
+                    understand user queries and provide
+                    helpful responses using artificial
+                    intelligence concepts.
+                </p>
+
+                <span class="tag">Artificial Intelligence</span>
+                <span class="tag">Python</span>
+
+            </div>
+
+            <div class="project-card">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                <h3>Student Management System</h3>
+
+                <p>
+                    Developed a student management system
+                    using C Programming to manage student
+                    details and perform basic record operations.
+                </p>
+
+                <span class="tag">C Programming</span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Education -->
+
+    <section class="education" id="education">
+
+        <div class="section-title">
+            <h2>Education</h2>
+            <p>My academic background</p>
+        </div>
+
+        <div class="edu-card">
+
+            <h3>B.Tech Information Technology</h3>
+
+            <p>
+                Velalar College of Engineering and Technology
+            </p>
+
+            <p>Third Year</p>
+
+            <p>Erode, Tamil Nadu</p>
+
+        </div>
+
+    </section>
+
+    <!-- Contact -->
+
+    <section class="contact" id="contact">
+
+        <div class="section-title">
+            <h2>Contact Me</h2>
+            <p>Let's connect and collaborate</p>
+        </div>
+
+        <p>
+            I am interested in learning opportunities,
+            internships, and data analytics projects.
+        </p>
+
+        <div class="socials">
+
+            <a href="https://www.linkedin.com/"
+               target="_blank"
+               title="LinkedIn">
+
+                <i class="fa-brands fa-linkedin"></i>
+
+            </a>
+
+            <a href="https://github.com/"
+               target="_blank"
+               title="GitHub">
+
+                <i class="fa-brands fa-github"></i>
+
+            </a>
+
+            <a href="mailto:your-email@gmail.com"
+               title="Email">
+
+                <i class="fa-solid fa-envelope"></i>
+
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            © 2026 Kirthika K | Data Analyst Portfolio
+        </p>
+
+    </footer>
+
+</body>
+</html>
+ 

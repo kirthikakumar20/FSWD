@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RedVibe - Social Media</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f8f5ff;color:#211331}
+.hidden{display:none!important}
+button{border:0;cursor:pointer;background:#7e22ce;color:white;padding:10px 16px;border-radius:20px;font-weight:bold}
+button:hover{background:#581c87}
+input,textarea{padding:12px;border:1px solid #ddd;border-radius:10px;width:100%;margin:8px 0;font-size:15px}
+.auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f3e8ff,#c084fc)}
+.auth-box{width:370px;max-width:92%;background:white;padding:35px;border-radius:20px;text-align:center;box-shadow:0 10px 30px #0002}
+.auth-box h1{color:#7e22ce;margin-bottom:10px}
+.auth-box button{width:100%;margin-top:10px}
+.auth-box span{color:#7e22ce;cursor:pointer;font-weight:bold}
+.error{color:red;margin:10px}
+.navbar{background:white;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:0 2px 10px #0001}
+.navbar h2{color:#7e22ce}
+.nav-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.container{width:650px;max-width:95%;margin:25px auto}
+.welcome{background:linear-gradient(135deg,#7e22ce,#c084fc);color:white;padding:25px;border-radius:15px;margin-bottom:20px}
+.post-box,.post,.user-card,.profile-box{background:white;padding:20px;border:1px solid #e9d5ff;border-radius:15px;margin-bottom:15px}
+.post-box textarea{height:100px;resize:vertical}
+.post-header{display:flex;align-items:center;gap:10px}
+.avatar{width:45px;height:45px;border-radius:50%;background:#7e22ce;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.post-text{margin:15px 0;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.post-actions{display:flex;gap:15px;border-top:1px solid #eee;padding-top:12px;flex-wrap:wrap}
+.action-btn{background:none;color:#777;padding:5px}
+.action-btn:hover{background:#f3e8ff;color:#7e22ce}
+.liked{color:#7e22ce;font-weight:bold}
+.user-card{display:flex;align-items:center;gap:12px}
+.user-info{flex:1}
+.user-info p,.muted{color:#777;font-size:13px;margin-top:4px}
+.profile-box{text-align:center;padding:30px}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:#7e22ce;color:white;display:flex;align-items:center;justify-content:center;font-size:30px;margin:auto}
+.stats{display:flex;justify-content:center;gap:35px;margin:20px}
+.stats div{display:flex;flex-direction:column;gap:5px}
+.stats b{font-size:22px;color:#7e22ce}
+.page-title{margin-bottom:20px}
+.page-title h1{color:#6b21a8}
+.page-title p{color:#777;margin-top:5px}
+.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:15px;z-index:10}
+.modal-content{background:white;padding:25px;border-radius:15px;width:500px;max-width:100%;max-height:80vh;overflow:auto}
+.close{float:right;background:#eee;color:#333}
+.comment{padding:12px 0;border-bottom:1px solid #eee}
+.comment strong{color:#7e22ce}
+.comment p{margin-top:5px}
+.comment-input{display:flex;gap:8px;margin-top:15px}
+.comment-input input{flex:1}
+.empty{text-align:center;background:white;padding:25px;border-radius:12px;color:#777}
+@media(max-width:600px){
+.navbar{justify-content:center}
+.nav-buttons{justify-content:center}
+.nav-buttons button{font-size:12px;padding:8px}
+.stats{gap:20px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginPage" class="auth-page">
+<div class="auth-box">
+<h1>🔴 RedVibe</h1>
+<p>Share. Connect. Vibe.</p>
+
+<input id="loginUsername" placeholder="Username">
+<input id="loginPassword" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p style="margin-top:15px">
+Don't have an account?
+<span onclick="showRegister()">Register</span>
+</p>
+
+<p id="loginError" class="error"></p>
+</div>
+</div>
+
+<!-- REGISTER -->
+
+<div id="registerPage" class="auth-page hidden">
+<div class="auth-box">
+<h1>Create Account</h1>
+<p>Join RedVibe today!</p>
+
+<input id="registerName" placeholder="Full Name">
+<input id="registerUsername" placeholder="Username">
+<input id="registerPassword" type="password" placeholder="Password">
+
+<button onclick="register()">Register</button>
+
+<p style="margin-top:15px">
+Already registered?
+<span onclick="showLogin()">Login</span>
+</p>
+
+<p id="registerError" class="error"></p>
+</div>
+</div>
+
+<!-- MAIN APPLICATION -->
+
+<div id="appPage" class="hidden">
+
+<nav class="navbar">
+<h2>🔴 RedVibe</h2>
+
+<div class="nav-buttons">
+<button onclick="showHome()">🏠 Home</button>
+<button onclick="showUsers()">👥 Users</button>
+<button onclick="showProfile()">👤 Profile</button>
+<button onclick="showNotifications()">🔔 Notifications</button>
+<button onclick="logout()">Logout</button>
+</div>
+</nav>
+
+<!-- HOME -->
+
+<div id="homePage" class="container">
+
+<div class="welcome">
+<h1>Welcome to RedVibe 🔥</h1>
+<p>What's happening in your world?</p>
+</div>
+
+<div class="post-box">
+<h3>Create Post</h3>
+<textarea id="postText" maxlength="280" placeholder="What's happening?"></textarea>
+
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span id="charCount">0/280</span>
+<button onclick="createPost()">Post 🔥</button>
+</div>
+</div>
+
+<h2 style="margin:20px 0">❤️ Home Feed</h2>
+<div id="feed"></div>
+
+</div>
+
+<!-- USERS -->
+
+<div id="usersPage" class="container hidden">
+
+<div class="page-title">
+<h1>Discover People</h1>
+<p>Find and follow people on RedVibe.</p>
+</div>
+
+<input id="searchUsers" placeholder="Search users..." oninput="renderUsers()">
+
+<div id="usersList"></div>
+
+</div>
+
+<!-- PROFILE -->
+
+<div id="profilePage" class="container hidden">
+
+<div class="profile-box">
+<div class="profile-avatar" id="profileAvatar">U</div>
+
+<h2 id="profileName"></h2>
+<p id="profileUsername" class="muted"></p>
+
+<div class="stats">
+<div>
+<b id="followersCount">0</b>
+<span>Followers</span>
+</div>
+
+<div>
+<b id="followingCount">0</b>
+<span>Following</span>
+</div>
+
+<div>
+<b id="postsCount">0</b>
+<span>Posts</span>
+</div>
+</div>
+
+<button onclick="editProfile()">Edit Profile</button>
+<button onclick="showConnections('followers')">Followers</button>
+<button onclick="showConnections('following')">Following</button>
+</div>
+
+<h2>My Posts</h2>
+<div id="myPosts"></div>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div id="notificationsPage" class="container hidden">
+<div class="page-title">
+<h1>🔔 Notifications</h1>
+<p>See who interacted with you.</p>
+</div>
+<div id="notificationList"></div>
+</div>
+
+</div>
+
+<!-- COMMENTS MODAL -->
+
+<div id="commentModal" class="modal hidden">
+<div class="modal-content">
+
+<button class="close" onclick="closeComments()">×</button>
+<h2>Comments</h2>
+
+<div id="commentsList"></div>
+
+<div class="comment-input">
+<input id="commentText" placeholder="Write a comment..." maxlength="200">
+<button onclick="addComment()">Send</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+let users = JSON.parse(localStorage.getItem("rv_users")) || [];
+let posts = JSON.parse(localStorage.getItem("rv_posts")) || [];
+let notifications = JSON.parse(localStorage.getItem("rv_notifications")) || [];
+
+let currentUser = Number(localStorage.getItem("rv_currentUser")) || null;
+let selectedPostId = null;
+
+function saveData(){
+    localStorage.setItem("rv_users",JSON.stringify(users));
+    localStorage.setItem("rv_posts",JSON.stringify(posts));
+    localStorage.setItem("rv_notifications",JSON.stringify(notifications));
+}
+
+function getUser(id){
+    return users.find(u=>u.id===Number(id));
+}
+
+function me(){
+    return getUser(currentUser);
+}
+
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g,function(c){
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+        }[c];
+    });
+}
+
+function showLogin(){
+    loginPage.classList.remove("hidden");
+    registerPage.classList.add("hidden");
+    appPage.classList.add("hidden");
+}
+
+function showRegister(){
+    loginPage.classList.add("hidden");
+    registerPage.classList.remove("hidden");
+}
+
+function register(){
+    const name=registerName.value.trim();
+    const username=registerUsername.value.trim();
+    const password=registerPassword.value;
+    const error=registerError;
+
+    error.innerText="";
+
+    if(!name||!username||!password){
+        error.innerText="Please fill all fields.";
+        return;
+    }
+
+    if(username.length<3){
+        error.innerText="Username must contain at least 3 characters.";
+        return;
+    }
+
+    if(password.length<4){
+        error.innerText="Password must contain at least 4 characters.";
+        return;
+    }
+
+    if(users.some(u=>u.username.toLowerCase()===username.toLowerCase())){
+        error.innerText="Username already exists.";
+        return;
+    }
+
+    users.push({
+        id:Date.now(),
+        name:name,
+        username:username,
+        password:password,
+        followers:[],
+        following:[]
+    });
+
+    saveData();
+
+    alert("Registration successful!");
+
+    registerName.value="";
+    registerUsername.value="";
+    registerPassword.value="";
+
+    showLogin();
+}
+
+function login(){
+    const username=loginUsername.value.trim().toLowerCase();
+    const password=loginPassword.value;
+
+    const user=users.find(u=>
+        u.username.toLowerCase()===username &&
+        u.password===password
+    );
+
+    if(!user){
+        loginError.innerText="Invalid username or password.";
+        return;
+    }
+
+    currentUser=user.id;
+    localStorage.setItem("rv_currentUser",currentUser);
+
+    loginError.innerText="";
+    showApp();
+}
+
+function logout(){
+    currentUser=null;
+    localStorage.removeItem("rv_currentUser");
+    showLogin();
+}
+
+function showApp(){
+    if(!me()){
+        showLogin();
+        return;
+    }
+
+    loginPage.classList.add("hidden");
+    registerPage.classList.add("hidden");
+    appPage.classList.remove("hidden");
+
+    showHome();
+}
+
+function hidePages(){
+    homePage.classList.add("hidden");
+    usersPage.classList.add("hidden");
+    profilePage.classList.add("hidden");
+    notificationsPage.classList.add("hidden");
+}
+
+function showHome(){
+    hidePages();
+    homePage.classList.remove("hidden");
+    renderFeed();
+}
+
+function showUsers(){
+    hidePages();
+    usersPage.classList.remove("hidden");
+    renderUsers();
+}
+
+function showProfile(){
+    hidePages();
+    profilePage.classList.remove("hidden");
+    renderProfile();
+}
+
+function showNotifications(){
+    hidePages();
+    notificationsPage.classList.remove("hidden");
+    renderNotifications();
+}
+
+postText.addEventListener("input",function(){
+    charCount.innerText=this.value.length+"/280";
+});
+
+function createPost(){
+    const text=postText.value.trim();
+
+    if(!text){
+        alert("Please write something first.");
+        return;
+    }
+
+    posts.unshift({
+        id:Date.now(),
+        userId:currentUser,
+        text:text,
+        likes:[],
+        comments:[],
+        time:new Date().toLocaleString()
+    });
+
+    postText.value="";
+    charCount.innerText="0/280";
+
+    saveData();
+    renderFeed();
+}
+
+function renderFeed(){
+    const feed=document.getElementById("feed");
+
+    const myUser=me();
+
+    if(!myUser)return;
+
+    const visiblePosts=posts.filter(p=>
+        p.userId===currentUser ||
+        myUser.following.includes(p.userId)
+    );
+
+    if(!visiblePosts.length){
+        feed.innerHTML='<div class="empty">No posts yet. Follow people to see their posts!</div>';
+        return;
+    }
+
+    feed.innerHTML=visiblePosts.map(p=>postHTML(p)).join("");
+}
+
+function postHTML(p){
+    const user=getUser(p.userId);
+
+    if(!user)return "";
+
+    const liked=p.likes.includes(currentUser);
+
+    return `
+    <div class="post">
+
+        <div class="post-header">
+            <div class="avatar">${escapeHTML(user.name[0].toUpperCase())}</div>
+
+            <div>
+                <b>${escapeHTML(user.name)}</b>
+                <small class="muted">@${escapeHTML(user.username)} · ${escapeHTML(p.time)}</small>
+            </div>
+        </div>
+
+        <div class="post-text">${escapeHTML(p.text)}</div>
+
+        <div class="post-actions">
+
+            <button class="action-btn ${liked?'liked':''}"
+                onclick="toggleLike(${p.id})">
+                ❤️ ${p.likes.length}
+            </button>
+
+            <button class="action-btn"
+                onclick="openComments(${p.id})">
+                💬 ${p.comments.length}
+            </button>
+
+            ${p.userId===currentUser?
+            `<button class="action-btn" onclick="deletePost(${p.id})">🗑 Delete</button>`
+            :""}
+
+        </div>
+    </div>`;
+}
+
+function toggleLike(postId){
+    const post=posts.find(p=>p.id===postId);
+    if(!post)return;
+
+    const index=post.likes.indexOf(currentUser);
+
+    if(index===-1){
+        post.likes.push(currentUser);
+
+        if(post.userId!==currentUser){
+            addNotification(post.userId,
+                me().name+" liked your post.");
+        }
+    }else{
+        post.likes.splice(index,1);
+    }
+
+    saveData();
+    renderFeed();
+    renderProfile();
+}
+
+function deletePost(postId){
+    if(!confirm("Delete this post?"))return;
+
+    posts=posts.filter(p=>
+        !(p.id===postId && p.userId===currentUser)
+    );
+
+    saveData();
+    renderFeed();
+    renderProfile();
+}
+
+function openComments(postId){
+    selectedPostId=postId;
+    renderComments();
+
+    commentModal.classList.remove("hidden");
+}
+
+function closeComments(){
+    commentModal.classList.add("hidden");
+}
+
+function renderComments(){
+    const post=posts.find(p=>p.id===selectedPostId);
+
+    if(!post)return;
+
+    commentsList.innerHTML=post.comments.map(c=>`
+        <div class="comment">
+            <strong>${escapeHTML(c.name)}</strong>
+            <span>@${escapeHTML(c.username)}</span>
+            <p>${escapeHTML(c.text)}</p>
+        </div>
+    `).join("") || '<p class="muted">No comments yet.</p>';
+}
+
+function addComment(){
+    const text=commentText.value.trim();
+
+    if(!text)return;
+
+    const post=posts.find(p=>p.id===selectedPostId);
+
+    if(!post)return;
+
+    post.comments.push({
+        userId:currentUser,
+        name:me().name,
+        username:me().username,
+        text:text
+    });
+
+    if(post.userId!==currentUser){
+        addNotification(post.userId,
+            me().name+" commented on your post.");
+    }
+
+    commentText.value="";
+
+    saveData();
+    renderComments();
+    renderFeed();
+}
+
+function renderUsers(){
+    const query=searchUsers.value.toLowerCase();
+
+    const otherUsers=users.filter(u=>
+        u.id!==currentUser &&
+        (u.name.toLowerCase().includes(query) ||
+         u.username.toLowerCase().includes(query))
+    );
+
+    usersList.innerHTML=otherUsers.map(u=>{
+        const following=me().following.includes(u.id);
+
+        return `
+        <div class="user-card">
+
+            <div class="avatar">${escapeHTML(u.name[0].toUpperCase())}</div>
+
+            <div class="user-info">
+                <h3>${escapeHTML(u.name)}</h3>
+                <p>@${escapeHTML(u.username)}</p>
+                <p>${u.followers.length} followers</p>
+            </div>
+
+            <button onclick="toggleFollow(${u.id})">
+                ${following?"Following":"Follow"}
+            </button>
+
+        </div>`;
+    }).join("") || '<div class="empty">No users found.</div>';
+}
+
+function toggleFollow(userId){
+    const user=me();
+    const target=getUser(userId);
+
+    if(!user||!target)return;
+
+    const index=user.following.indexOf(userId);
+
+    if(index===-1){
+        user.following.push(userId);
+        target.followers.push(currentUser);
+
+        addNotification(userId,
+            user.name+" started following you.");
+    }else{
+        user.following.splice(index,1);
+
+        target.followers=target.followers.filter(id=>
+            id!==currentUser
+        );
+    }
+
+    saveData();
+
+    renderUsers();
+    renderFeed();
+    renderProfile();
+}
+
+function renderProfile(){
+    const user=me();
+
+    if(!user)return;
+
+    profileAvatar.innerText=user.name[0].toUpperCase();
+    profileName.innerText=user.name;
+    profileUsername.innerText="@"+user.username;
+
+    followersCount.innerText=user.followers.length;
+    followingCount.innerText=user.following.length;
+
+    const mine=posts.filter(p=>p.userId===currentUser);
+
+    postsCount.innerText=mine.length;
+
+    myPosts.innerHTML=mine.map(p=>postHTML(p)).join("")
+        ||'<div class="empty">You have not posted anything yet.</div>';
+}
+
+function editProfile(){
+    const user=me();
+
+    const name=prompt("Enter your name:",user.name);
+
+    if(name===null || !name.trim())return;
+
+    const username=prompt("Enter your username:",user.username);
+
+    if(username===null || !username.trim())return;
+
+    const newUsername=username.trim();
+
+    const exists=users.some(u=>
+        u.id!==currentUser &&
+        u.username.toLowerCase()===newUsername.toLowerCase()
+    );
+
+    if(exists){
+        alert("Username already exists.");
+        return;
+    }
+
+    user.name=name.trim();
+    user.username=newUsername;
+
+    saveData();
+    renderProfile();
+}
+
+function showConnections(type){
+    const user=me();
+
+    const ids=type==="followers"
+        ?user.followers
+        :user.following;
+
+    const people=ids.map(id=>getUser(id)).filter(Boolean);
+
+    hidePages();
+    usersPage.classList.remove("hidden");
+
+    usersList.innerHTML=people.map(u=>`
+        <div class="user-card">
+            <div class="avatar">${escapeHTML(u.name[0].toUpperCase())}</div>
+            <div class="user-info">
+                <h3>${escapeHTML(u.name)}</h3>
+                <p>@${escapeHTML(u.username)}</p>
+            </div>
+        </div>
+    `).join("") || '<div class="empty">No users here yet.</div>';
+}
+
+function addNotification(userId,text){
+    notifications.unshift({
+        id:Date.now()+Math.random(),
+        userId:userId,
+        text:text,
+        time:new Date().toLocaleString()
+    });
+}
+
+function renderNotifications(){
+    const mine=notifications.filter(n=>
+        n.userId===currentUser
+    );
+
+    notificationList.innerHTML=mine.map(n=>`
+        <div class="post">
+            <p>${escapeHTML(n.text)}</p>
+            <small class="muted">${escapeHTML(n.time)}</small>
+        </div>
+    `).join("") || '<div class="empty">No notifications yet.</div>';
+}
+
+if(currentUser && me()){
+    showApp();
+}else{
+    showLogin();
+}
+
+</script>
+
+</body>
+</html>
+
